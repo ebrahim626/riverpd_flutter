@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
@@ -16,7 +18,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final text = ref.watch(hello);
-    final count = ref.watch(counter);
+    log('message1');
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -35,15 +37,27 @@ class HomeScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "$text $count",
-              style: TextStyle(fontSize: 40, color: Colors.black54),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Text(text,style: TextStyle(fontSize: 40, color: Colors.black54)),
+              Consumer(
+                builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  final count = ref.watch(counter);
+                  return Text(
+                    " $count",
+                    style: TextStyle(fontSize: 40, color: Colors.black54),
+                  );
+                },
+              ),
+            ],),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    log('message2');
                     ref.read(counter.notifier).state--;
                   },
                   child: Icon(Icons.remove, size: 25),
@@ -51,6 +65,7 @@ class HomeScreen extends ConsumerWidget {
                 SizedBox(width: 15),
                 ElevatedButton(
                   onPressed: () {
+                    log('message3');
                     ref.read(counter.notifier).state++;
                   },
                   child: Icon(Icons.add, size: 25),
