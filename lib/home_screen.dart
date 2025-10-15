@@ -43,6 +43,7 @@ class HomeScreen extends ConsumerWidget {
               Text(text,style: TextStyle(fontSize: 40, color: Colors.black54)),
               Consumer(
                 builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                  log('message2');
                   final count = ref.watch(counter);
                   return Text(
                     " $count",
@@ -57,7 +58,6 @@ class HomeScreen extends ConsumerWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    log('message2');
                     ref.read(counter.notifier).state--;
                   },
                   child: Icon(Icons.remove, size: 25),
@@ -65,7 +65,6 @@ class HomeScreen extends ConsumerWidget {
                 SizedBox(width: 15),
                 ElevatedButton(
                   onPressed: () {
-                    log('message3');
                     ref.read(counter.notifier).state++;
                   },
                   child: Icon(Icons.add, size: 25),
